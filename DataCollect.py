@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 
-def get_EAN():
+def get_ean():
     products_ean = list()
     path = os.path.abspath("../DB_GET/dbForTest.db")
     print(path)

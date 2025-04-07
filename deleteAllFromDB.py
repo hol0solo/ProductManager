@@ -1,14 +1,7 @@
 import aiohttp
 import asyncio
-import json
 import ast
-from CONFIG.config import BEARER_TOKEN, SITE_DB_NAME, SITE_API_URL
-
-headers = {
-    "Authorization": BEARER_TOKEN,
-    "Accept": "application/json",
-    "database": SITE_DB_NAME,
-}
+from CONFIG.config import SITE_API_URL
 
 
 base_url = SITE_API_URL

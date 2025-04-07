@@ -2,11 +2,11 @@ import aiohttp
 import asyncio
 import json
 
-from CONFIG.config import SITE_API_URL, BEARER_TOKEN, SITE_DB_NAME
+from CONFIG.config import SITE_API_URL
 
 
 async def post_request(session, url, headers, data):
-    ''' Делаем асинхронный ПОСТ запрос для API на PHP '''
+    """ Делаем асинхронный ПОСТ запрос для API на PHP """
     try:
         async with session.post(url, headers=headers, json=data) as response:
             json_response = await response.json()
@@ -18,7 +18,7 @@ async def post_request(session, url, headers, data):
 
 
 async def post_product_id(session, headers, ean, manufacturer, url_key):
-    ''' ПОСТ запрос для создания Artikel_id '''
+    """ ПОСТ запрос для создания Artikel_id """
     data = {
         "is_search_indexed": 0,
         "subsequent_article": 0,
@@ -43,7 +43,7 @@ async def post_product_id(session, headers, ean, manufacturer, url_key):
 
 
 async def post_product_price(session, id, price, headers):
-    ''' ПОСТ запрос для создания ЦЕНЫ '''
+    """ ПОСТ запрос для создания ЦЕНЫ """
     data = {
         "article_id": id,
         "price": price,
@@ -56,7 +56,7 @@ async def post_product_price(session, id, price, headers):
 
 
 async def post_product_content(session, id, headers, title, url_key, search_field):
-    ''' ПОСТ запрос для создания КОНТЕНТА '''
+    """ ПОСТ запрос для создания КОНТЕНТА """
     data = {
         "article_id": id,
         "language": "de",
@@ -69,7 +69,7 @@ async def post_product_content(session, id, headers, title, url_key, search_fiel
 
 
 async def post_product_category(session, id, headers, category_code, category_id):
-    ''' Пост запрос для создания КАТЕГОРИИ '''
+    """ Пост запрос для создания КАТЕГОРИИ """
     print(category_code)
     print(type(category_code))
     print(category_id)
@@ -118,14 +118,9 @@ async def post_product_property(session, id, headers):
     await post_request(session, url, headers, data)
 
 
-async def create_product(ean, price, title, url_key, category_code, category_id, stock_current, stock_min,
+async def create_product(headers, ean, price, title, url_key, category_code, category_id, stock_current, stock_min,
                          manufacturer, search_field):
-    ''' Конечная функция создания продукта '''
-    headers = {
-        "Authorization": BEARER_TOKEN,
-        "Accept": "application/json",
-        "database": SITE_DB_NAME,
-    }
+    """ Конечная функция создания продукта """
 
     async with aiohttp.ClientSession() as session:
         article_id = await post_product_id(session=session, headers=headers, ean=ean,
